@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import jp.co.sss.crud.db.DBController;
+import jp.co.sss.crud.util.Constants;
 
 /**
  * 社員情報管理システム開始クラス 社員情報管理システムはこのクラスから始まる。<br/>
@@ -26,27 +27,19 @@ public class MainSystem {
 	 */
 	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, ParseException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-		int menuNo = 0;
+		int menu = 0;
 
 		do {
 			// メニューの表示
-			System.out.println("=== 社員管理システム ===");
-			System.out.println("1.全件表示");
-			System.out.println("2.社員名検索");
-			System.out.println("3.部署ID検索");
-			System.out.println("4.新規登録");
-			System.out.println("5.更新");
-			System.out.println("6.削除");
-			System.out.println("7.終了");
-			System.out.print("メニュー番号を入力してください：");
-
+			System.out.println(Constants.MENU);
+			System.out.println(Constants.MENU_VIEW);
+			
 			// メニュー番号の入力
-			String menuNoStr = br.readLine();
-			menuNo = Integer.parseInt(menuNoStr);
+			String inputMenu = br.readLine();
+			menu = Integer.parseInt(inputMenu);
 
 			// 機能の呼出
-			switch (menuNo) {
+			switch (menu) {
 			case 1:
 				// 全件表示機能の呼出
 				DBController.find();
@@ -54,7 +47,7 @@ public class MainSystem {
 
 			case 2:
 				// 社員名検索
-				System.out.print("社員名:");
+				System.out.print(Constants.EMP_NAME);
 
 				// 検索機能の呼出
 				DBController.findB();
@@ -62,52 +55,52 @@ public class MainSystem {
 
 			case 3:
 				// 検索する部署IDを入力
-				System.out.print("部署ID(1:営業部、2:経理部、3:総務部)を入力してください:");
-				String deptIdA = br.readLine();
+				System.out.print(Constants.DEPT_ID);
+				String searchDept = br.readLine();
 
 				// 検索機能の呼出
-				DBController.findC(deptIdA);
+				DBController.findC(searchDept);
 				break;
 
 			case 4:
 				// 登録する値を入力
-				System.out.print("社員名:");
-				String emp_name = br.readLine();
-				System.out.print("性別(0:その他, 1:男性, 2:女性, 9:回答なし):");
-				String Seibetsu = br.readLine();
-				System.out.print("生年月日(西暦年/月/日):");
+				System.out.print(Constants.EMP_NAME);
+				String empName = br.readLine();
+				System.out.print(Constants.GENDER);
+				String gender = br.readLine();
+				System.out.print(Constants.BIRTHDAY);
 				String birthday = br.readLine();
-				System.out.print("部署ID(1:営業部、2:経理部、3:総務部):");
-				String deptIdB = br.readLine();
+				System.out.print(Constants.DEPT_ID);
+				String deptId = br.readLine();
 
 				// 登録機能の呼出
-				DBController.insert(emp_name, Seibetsu, birthday, deptIdB);
+				DBController.insert(empName, gender, birthday, deptId);
 				break;
 
 			case 5:
 				// 更新する社員IDを入力
-				System.out.print("更新する社員の社員IDを入力してください：");
+				System.out.print(Constants.UPDATE_EMP_ID);
 
 				// 更新する値を入力する
-				String empId_1 = br.readLine();
-				Integer.parseInt(empId_1);
+				String updateEmpId = br.readLine();
+				Integer.parseInt(updateEmpId);
 
 				// 更新機能の呼出
-				DBController.update(empId_1);
-				System.out.println("社員情報を更新しました");
+				DBController.update(updateEmpId);
+				System.out.println(Constants.UPDATE_MESSAGE);
 
 				break;
 
 			case 6:
 				// 削除する社員IDを入力
-				System.out.print("削除する社員の社員IDを入力してください：");
+				System.out.print(Constants.DELETE_EMP_ID);
 
 				// 削除機能の呼出
 				DBController.delete();
 				break;
 
 			}
-		} while (menuNo != 7);
-		System.out.println("システムを終了します。");
+		} while (menu != 7);
+		System.out.println(Constants.END_MESSAGE);
 	}
 }
