@@ -5,6 +5,7 @@ public class EmployeeDTO {
 	private String empName;
 	private int gender;
 	private String birthday;
+	private int deptId;
 	private String deptName;
 
 	// getter / setter
@@ -40,6 +41,14 @@ public class EmployeeDTO {
 		this.birthday = birthday;
 	}
 
+	public int getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
+	}
+
 	public String getDeptName() {
 		return deptName;
 	}
@@ -48,7 +57,6 @@ public class EmployeeDTO {
 		this.deptName = deptName;
 	}
 
-	// toString()をオーバーライド（コンソール表示を一括管理）
 	@Override
 	public String toString() {
 		String genderStr = switch (gender) {
