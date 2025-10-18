@@ -10,7 +10,6 @@ import jp.co.sss.crud.service.EmployeeAllFindService;
 import jp.co.sss.crud.service.EmployeeDeleteService;
 import jp.co.sss.crud.service.EmployeeFindByDeptIdService;
 import jp.co.sss.crud.service.EmployeeFindByEmpNameService;
-import jp.co.sss.crud.service.EmployeeRegisterService;
 import jp.co.sss.crud.service.EmployeeUpdateService;
 import jp.co.sss.crud.util.Constants;
 
@@ -30,7 +29,7 @@ public class MainSystem {
 	 * @throws ClassNotFoundException 
 	 * @throws ParseException 
 	 */
-	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, ParseException {
+	public static void main(String[] args) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int menu = 0;
 
@@ -40,84 +39,62 @@ public class MainSystem {
 			System.out.println(Constants.MENU_VIEW);
 
 			// メニュー番号の入力
-			String inputMenu = br.readLine();
-			menu = Integer.parseInt(inputMenu);
+			try {
+				String inputMenu = br.readLine();
+				menu = Integer.parseInt(inputMenu);
 
-			// 機能の呼出
-			switch (menu) {
-			case 1:
-				// 全件表示機能の呼出
-				//				DBController.find();
-				EmployeeAllFindService findAll = new EmployeeAllFindService();
-				findAll.execute();
+				// 機能の呼出
+				switch (menu) {
+				case 1: //全件表示
+					EmployeeAllFindService findAll = new EmployeeAllFindService();
+					findAll.execute();
 
-				break;
+					break;
 
-			case 2:
-				// 社員名検索
-				//				System.out.print(Constants.EMP_NAME);
-				//
-				//				// 検索機能の呼出
-				//				DBController.findB();
-				EmployeeFindByEmpNameService findEmpName = new EmployeeFindByEmpNameService();
-				findEmpName.execute();
-				break;
+				case 2: //社員名検索
+					EmployeeFindByEmpNameService findEmpName = new EmployeeFindByEmpNameService();
+					findEmpName.execute();
+					break;
 
-			case 3:
-				// 検索する部署IDを入力
-				//				System.out.print(Constants.DEPT_ID);
-				//				String searchDept = br.readLine();
-				//
-				//				// 検索機能の呼出
-				//				DBController.findC(searchDept);
-				EmployeeFindByDeptIdService FindByDeptId = new EmployeeFindByDeptIdService();
-				FindByDeptId.execute();
-				break;
+				case 3: //部署名検索
+					EmployeeFindByDeptIdService FindByDeptId = new EmployeeFindByDeptIdService();
+					FindByDeptId.execute();
+					break;
 
-			case 4:
-				// 登録する値を入力
-				//				System.out.print(Constants.EMP_NAME);
-				//				String empName = br.readLine();
-				//				System.out.print(Constants.GENDER);
-				//				String gender = br.readLine();
-				//				System.out.print(Constants.BIRTHDAY);
-				//				String birthday = br.readLine();
-				//				System.out.print(Constants.DEPT_ID);
-				//				String deptId = br.readLine();
-				//
-				//				// 登録機能の呼出
-				//				DBController.insert(empName, gender, birthday, deptId);
-				EmployeeRegisterService regist = new EmployeeRegisterService();
-				regist.execute();
-				break;
+				//				case 4: //登録
+				//					EmployeeRegisterService regist = new EmployeeRegisterService();
+				//					regist.execute();
+				//					break;
 
-			case 5:
-				// 更新する社員IDを入力
-				//				System.out.print(Constants.UPDATE_EMP_ID);
-				//
-				//				// 更新する値を入力する
-				//				String updateEmpId = br.readLine();
-				//				Integer.parseInt(updateEmpId);
-				//
-				//				// 更新機能の呼出
-				//				DBController.update(updateEmpId);
-				//				System.out.println(Constants.UPDATE_MESSAGE);
-				EmployeeUpdateService update = new EmployeeUpdateService();
-				update.execute();
-				break;
+				case 5: //更新
+					EmployeeUpdateService update = new EmployeeUpdateService();
+					update.execute();
+					break;
 
-			case 6:
-				//				// 削除する社員IDを入力
-				//				System.out.print(Constants.DELETE_EMP_ID);
-				//
-				//				// 削除機能の呼出
-				//				DBController.delete();
-				EmployeeDeleteService delete = new EmployeeDeleteService();
-				delete.execute();
-				break;
+				case 6: //削除
+					EmployeeDeleteService delete = new EmployeeDeleteService();
+					delete.execute();
+					break;
 
+				}
+			} catch (IOException e) {
+				//入出力エラー
+				System.out.println(Constants.ERROR_MESSAGE_INPUT + e.getMessage());
+			} catch (NumberFormatException e) {
+				//数字エラー
+				System.out.println(Constants.ERROR_MESSAGE_NUMBER_FRAUD);
+			} catch (ClassNotFoundException e) {
+				//DBドライバーエラー
+				System.out.println(Constants.ERROR_MESSAGE_DB_DRIVER + e.getMessage());
+			} catch (SQLException e) {
+				//DB処理エラー
+				System.out.println(Constants.ERROR_MESSAGE_DB_PROCESS + e.getMessage());
+			} catch (Exception e) {
+				//予期せぬエラー
+				System.out.println(Constants.ERROR_MESSAGE_UNEXPECTED + e.getMessage());
 			}
 		} while (menu != 7);
 		System.out.println(Constants.END_MESSAGE);
 	}
+
 }

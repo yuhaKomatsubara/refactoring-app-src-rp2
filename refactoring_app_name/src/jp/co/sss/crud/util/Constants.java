@@ -16,5 +16,9 @@ public class Constants {
 	public static final String RESIST_COMPLETE = "登録完了";
 	public static final String UPDATE_COMPLETE = "更新完了";
 	public static final String DELETE_COMPLETE = "削除完了";
-
+	public static final String ERROR_MESSAGE_INPUT = "入出力エラー:";
+	public static final String ERROR_MESSAGE_NUMBER_FRAUD = "数字の形式が不正です。";
+	public static final String ERROR_MESSAGE_DB_DRIVER = "DBドライバーエラー: ";
+	public static final String ERROR_MESSAGE_DB_PROCESS = "DB処理エラー: ";
+	public static final String ERROR_MESSAGE_UNEXPECTED = "予期せぬエラー: ";
 }
